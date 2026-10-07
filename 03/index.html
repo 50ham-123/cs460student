@@ -36,6 +36,7 @@
         var TORUSES = toruses;
         var FLICKERING = false;
         var wasFlickering = false;
+        var WIREFRAME = false;
 
         window.onload = function () {
 
@@ -89,7 +90,7 @@
                     console.log('Ray to Invisible Plane', intersects[0].point);
 
                     var geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
-                    var material = new THREE.MeshBasicMaterial({ color: 0xFF69B4 });
+                    var material = new THREE.MeshBasicMaterial({ color: 0xFF69B4, wireframe: WIREFRAME });
                     var torus = new THREE.Mesh(geometry, material);
                     torus.position.set(intersects[0].point.x, intersects[0].point.y, intersects[0].point.z);
                     scene.add(torus);
@@ -127,6 +128,12 @@
             window.onkeypress = function (e) {
                 if (e.key === 'f') {
                     FLICKERING = !FLICKERING;
+                }
+                if (e.key === 'w') {
+                    WIREFRAME = !WIREFRAME;
+                    toruses.forEach(function (torus) {
+                        torus.material.wireframe = WIREFRAME;
+                    });
                 }
             }
             
